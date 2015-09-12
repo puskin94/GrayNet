@@ -1,43 +1,28 @@
+// TODO: non scarica i files
+
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
 var crypto = require('crypto');
 var request = require('request');
+var publicIp = require('public-ip');
+var watch = require('watch');
 
 var mirrorList = require('./mirrorlist.json');
 var hashTable = require('./hashTable.json');
+var sharedFiles = fs.readdirSync('cache/');
+var externalIp;
+
+publicIp(function (err, ip) {
+    externalIp = 'http://' + ip;
+});
+
 
 
 var option = process.argv[2];
 
 if (option === '--add') {
     addWellKnownPeer(process.argv[3]);
-}
-
-
-function updateIndex() {
-    var link = '';
-
-    fs.readFile('hashTable.json', function(error, dataHt) {
-        if (error) throw error;
-        var readable = JSON.parse(dataHt);
-
-        for (var key in readable) {
-            link += '<a href="http://localhost:1337/lff/' + key +'">' + key + '</a><br>\n';
-        }
-
-        fs.readFile('index.html', function(error, dataIx) {
-
-            var regex = new RegExp('(<div id="URLS">)((.|\n)*)(<\/div>)', 'i');
-            var res = dataIx.toString().replace(regex, '$1\n\n' + link + '\n\n$4');
-
-            fs.writeFile('index.html', res, function(err) {
-                if(err) throw err;
-            });
-
-        });
-    });
-
 }
 
 var server = http.createServer(function(request, response) {
@@ -65,6 +50,46 @@ var server = http.createServer(function(request, response) {
 
 server.listen(1337);
 
+console.log('Server is running on port 1337');
+console.log('Try it browsing on http://localhost:1337');
+
+// fs.watch looks for 'cache/' changes. If a file is created/downloaded,
+// 'sha256sum: ["externalIP"]' is added to the local hashTable.
+// Otherwise, if a file is deleted, the touple is removed from the local HT.
+
+watch.watchTree('cache/', function (file, curr, prev) {
+    if (prev === null) {
+        // new file
+        fs.readFile('hashTable.json', function(error, hashTable) {
+            var ht = JSON.parse(hashTable);
+            ht[file] = [externalIp];
+
+            if (typeof(ht[file]) != 'object') {
+                fs.writeFile('hashTable.json', JSON.stringify(ht), function(err) {
+                    if(err) throw err;
+                });
+            }
+        });
+        updateIndex();
+    } else if (curr.nlink === 0) {
+        // file deleted
+        removeFile(file);
+        updateIndex();
+    }
+});
+
+
+function removeFile(filename) {
+    sharedFiles.splice(sharedFiles.indexOf(filename), 1);
+    fs.readFile('hashTable.json', function(error, hashTable) {
+        var ht = JSON.parse(hashTable);
+        delete ht[filename];
+        fs.writeFile('hashTable.json', JSON.stringify(ht), function(err) {
+            if(err) throw err;
+        });
+    });
+}
+
 function writeResponse(response, page) {
     if (page === 'index.html' || page === 'hashTable.json') {
         fs.readFile(page, function(err,data) {
@@ -75,9 +100,6 @@ function writeResponse(response, page) {
     }
 }
 
-console.log('Server is running on port 1337');
-console.log('Try it browsing on http://localhost:1337');
-
 // la hashTable è così composta:
 // 238723ggwe8r7: [123.234.345.456, 123.345.567.234]
 function askForHashTable(ip, callback) {
@@ -87,14 +109,24 @@ function askForHashTable(ip, callback) {
     });
 }
 
+// asks to the Net for a specific file
 function lookForFile(page, callback) {
     for (var hash in hashTable) {
         if (page == hash) {
-            // richiedo dati aggiornati a tutti gli utenti di anon Net
+            // richiedo dati aggiornati a tutti i nodi di GrayNet
             for (var address in hashTable[hash]) {
                 request(hashTable[hash][address] + ':1337/gtf/' + page, function (error, res, body) {
                     if (!error && res.statusCode == 200 && body.toString() != '') {
-                        callback(body);
+                        // download the page in 'cache/' if it doesn't exists in the folder.
+                        getFile(page, function(file) {
+                            // not exists.
+                            if (file == '') {
+                                fs.writeFile('cache/' + page, body, function(err) {
+                                    if(err) throw err;
+                                });
+                            }
+                            callback(body);
+                        });
                     } else {
                         console.log(error);
                     }
@@ -111,6 +143,7 @@ function lookForFile(page, callback) {
     }
 }
 
+// looks for local files in 'cache/'
 function getFile(file, callback) {
     // ottengo i nomi di tutti i files che ho salvati in cache
     fs.readdir('cache', function(error, filename) {
@@ -132,6 +165,8 @@ function getFile(file, callback) {
     });
 }
 
+// add a new Node to the WellKnownPeer. This node will share with you his local
+// network.
 function addWellKnownPeer(ip) {
     fs.readFile('mirrorlist.json', function(error, data) {
         var readable = JSON.parse(data);
@@ -179,6 +214,31 @@ function addWellKnownPeer(ip) {
                 fs.writeFile('hashTable.json', JSON.stringify(lHt), function(err) {
                     if(err) throw err;
                 });
+            });
+
+        });
+    });
+}
+
+// this function updates the index file with new discovered Datas through the net
+function updateIndex() {
+    var link = '';
+
+    fs.readFile('hashTable.json', function(error, dataHt) {
+        if (error) throw error;
+        var readable = JSON.parse(dataHt);
+
+        for (var key in readable) {
+            link += '<a href="http://localhost:1337/lff/' + key +'">' + key + '</a><br>\n';
+        }
+
+        fs.readFile('index.html', function(error, dataIx) {
+
+            var regex = new RegExp('(<div id="URLS">)((.|\n)*)(<\/div>)', 'i');
+            var res = dataIx.toString().replace(regex, '$1\n\n' + link + '\n\n$4');
+
+            fs.writeFile('index.html', res, function(err) {
+                if(err) throw err;
             });
 
         });
