@@ -1,0 +1,5 @@
+{
+    "port": "1337",
+    "htFilename": "../jsonFiles/hashTable.json",
+    "mlFilename": "../jsonFiles/mirrorlist.json"
+}
