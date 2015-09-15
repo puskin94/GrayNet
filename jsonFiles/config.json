@@ -1,5 +1,8 @@
 {
     "port": "1337",
-    "htFilename": "../jsonFiles/hashTable.json",
-    "mlFilename": "../jsonFiles/mirrorlist.json"
+    "cache": "cache/",
+    "index": "frontend/index.html",
+    "page404": "frontend/404.html",
+    "htFilename": "jsonFiles/hashTable.json",
+    "mlFilename": "jsonFiles/mirrorlist.json"
 }

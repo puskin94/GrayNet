@@ -1,0 +1,24 @@
+{
+  "name": "graynet.js",
+  "version": "1.0.0",
+  "description": "a P2P network",
+  "main": "lib/graynet.js",
+  "scripts": {
+    "start": "node lib/graynet.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/puskin94/GrayNet.js.git"
+  },
+  "keywords": [
+    "p2p",
+    "network",
+    "darknet"
+  ],
+  "author": "Giovanni Bucci <giovanni.puskin@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/puskin94/GrayNet.js/issues"
+  },
+  "homepage": "https://github.com/puskin94/GrayNet.js#readme"
+}
