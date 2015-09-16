@@ -1,5 +1,5 @@
 {
-    "port": "1337",
+    "port": "2259",
     "cache": "cache/",
     "index": "frontend/index.html",
     "header": "frontend/header.html",
