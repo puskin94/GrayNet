@@ -14,5 +14,5 @@ Main files for a correct browsing are `hashTable.json` and `mirrorlist.json` loc
 
 ###How does browsing work?
 Just clone this repo, enter the folder and type `npm start`.
-Now you can visit `http://localhost:1337` and join the GrayNet community.
+Now you can visit `http://localhost:2259` and join the GrayNet community.
 Once you visited a link, the server downloads that file in the `cache/` folder and adds your IP to your local copy of the hashTable. The next time you'll visit that link, you will not need to download that file again ;) Server will serve you the local copy :+1:
