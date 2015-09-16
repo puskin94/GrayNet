@@ -2,6 +2,8 @@
     "port": "1337",
     "cache": "cache/",
     "index": "frontend/index.html",
+    "header": "frontend/header.html",
+    "footer": "frontend/footer.html",
     "page404": "frontend/404.html",
     "style": "frontend/css/style.css",
     "addHost": "frontend/addHost.html",
