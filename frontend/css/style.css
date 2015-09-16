@@ -1,4 +1,28 @@
-.leftBar {
-    width: 20%;
+#container {
+    width:100%;
+    text-align:center;
+}
+
+#leftBar {
+    width: 17%;
+    height: 100%;
+    float:left;
     background-color: #443536;
+}
+
+#addHostForm {
+    margin-top: 10%;
+    margin-left: 50%;
+    position: absolute;
+}
+
+a:active , a:hover , a:link {
+    color: #ba5d00;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #ba5d00;
+    font-size: 18px;
 }

@@ -1,6 +1,6 @@
 {
   "name": "graynet.js",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "a P2P network",
   "main": "lib/graynet.js",
   "scripts": {

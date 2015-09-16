@@ -1,0 +1,13 @@
+<div id="addHostForm">
+    <input type="text" value="ip" id="ip">
+    <input type="submit" value="Add" onClick="addHost()">
+</div>
+
+<script>
+    function addHost() {
+        var ip = document.getElementById('ip').value;
+        window.location = '/ah/' + ip;
+    }
+</script>
+
+
