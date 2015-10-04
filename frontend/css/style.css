@@ -6,8 +6,17 @@
 #leftBar {
     width: 17%;
     height: 100%;
-    float:left;
+    float: left;
     background-color: #443536;
+}
+
+#textBar {
+    text-align: left;
+    margin-left: 7px;
+}
+
+#subTitle {
+    text-align: left;
 }
 
 #addHostForm {
