@@ -1,5 +1,4 @@
 {
-    "username": "puskin",
     "port": "2259",
     "cache": "cache/",
     "rsaKeysFolders" : "rsaKeys/",
