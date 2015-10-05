@@ -1,6 +1,8 @@
 {
+    "username": "puskin",
     "port": "2259",
     "cache": "cache/",
+    "rsaKeysFolders" : "rsaKeys/",
     "index": "frontend/index.html",
     "header": "frontend/header.html",
     "footer": "frontend/footer.html",

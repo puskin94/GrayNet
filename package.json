@@ -6,7 +6,8 @@
   "dependencies" : {
     "request": ">= 2.58.0",
     "url": ">= 0.11.0",
-    "watch": ">= 0.16.0"
+    "watch": ">= 0.16.0",
+    "node-rsa": ">= 0.2.25"
   },
   "scripts": {
     "start": "node lib/graynet.js"
