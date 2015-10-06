@@ -1,13 +1,15 @@
 {
-    "port": "2259",
-    "cache": "cache/",
-    "rsaKeysFolders" : "rsaKeys/",
-    "index": "frontend/index.html",
-    "header": "frontend/header.html",
-    "footer": "frontend/footer.html",
-    "page404": "frontend/404.html",
-    "style": "frontend/css/style.css",
-    "addHost": "frontend/addHost.html",
-    "htFilename": "jsonFiles/hashTable.json",
-    "mlFilename": "jsonFiles/mirrorlist.json"
+    "portHttp":"2259",
+    "portNet":"2260",
+    "oldIp": "",
+    "cache":"cache/",
+    "rsaKeysFolders":"rsaKeys/",
+    "index":"frontend/index.html",
+    "header":"frontend/header.html",
+    "footer":"frontend/footer.html",
+    "page404":"frontend/404.html",
+    "style":"frontend/css/style.css",
+    "addHost":"frontend/addHost.html",
+    "htFilename":"jsonFiles/hashTable.json",
+    "mlFilename":"jsonFiles/mirrorlist.json"
 }
