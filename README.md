@@ -14,4 +14,5 @@ Added a secondary server to manage silent messages between peers.
 
 ####TODO
 - Encrypt all the communications
+- The friend request will be bilateral
 - Add a notification center
