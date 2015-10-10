@@ -1,1 +1,10 @@
-{"notifications":0,"friendshipRequests":{"toSendQueue":[],"receivedQueue":[]}}
+{
+    "notifications":0,
+    "friendshipRequests":{
+        "toSendQueue":[],
+        "toSendAccepted": [],
+        "receivedQueue":{
+
+        }
+    }
+}
