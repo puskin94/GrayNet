@@ -2,9 +2,8 @@
     "notifications":0,
     "friendshipRequests":{
         "toSendQueue":[],
-        "toSendAccepted": [],
+        "toSendAccepted":[],
         "receivedQueue":{
 
         }
-    }
-}
+    }}
